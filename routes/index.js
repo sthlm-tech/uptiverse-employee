@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 // our db model
-var Animal = require("../models/model.js");
+var Employee = require("../models/model.js");
 
 /**
  * GET '/'
@@ -14,8 +14,8 @@ var Animal = require("../models/model.js");
 router.get('/', function(req, res) {
   
   var jsonData = {
-  	'name': 'node-express-api-boilerplate',
-  	'api-status':'OK'
+  	'name': 'Initial Uptiverse-Employee based on Node Express Bolierplate',
+  	'api-status':'Err, yeah!'
   }
 
   // respond with json data
@@ -39,45 +39,48 @@ router.post('/api/create', function(req, res){
     console.log(req.body);
 
     // pull out the information from the req.body
-    var name = req.body.name;
-    var age = req.body.age;
-    var tags = req.body.tags.split(","); // split string into array
-    var weight = req.body.weight;
-    var color = req.body.color;
-    var url = req.body.url;
+    
+    var employeeNumber = req.body.employeeNumber;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var birthDate = req.body.birthDate; 
+    var email = req.body.email;
+    var phone = req.body.phone; 
+    var internalRoles = req.body.internalRoles.split(",");
+      
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
-    var animalObj = {
-      name: name,
-      age: age,
-      tags: tags,
-      description: {
-        weight: weight,
-        color: color
-      },
-      url: url
+    var employeeObj = new  {
+        employeeNumber: employeeNumber,
+	firstName: firstName,
+	lastName:lastName,
+	birthDate: birthDate,
+	email: email,
+	phone: phone,
+	internalRoles: internalRoles
     };
 
-    // create a new animal model instance, passing in the object
-    var animal = new Animal(animalObj);
 
-    // now, save that animal instance to the database
+    // create a new employee model instance, passing in the object
+    var employee = new Employee(employeeObj);
+
+    // now, save that employee instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    animal.save(function(err,data){
+    employee.save(function(err,data){
       // if err saving, respond back with error
       if (err){
-        var error = {status:'ERROR', message: 'Error saving animal'};
+        var error = {status:'ERROR', message: 'Error saving enpployee'};
         return res.json(error);
       }
 
-      console.log('saved a new animal!');
+      console.log('saved a new employee!');
       console.log(data);
 
-      // now return the json data of the new animal
+      // now return the json data of the new employee
       var jsonData = {
         status: 'OK',
-        animal: data
+        employee: data
       }
 
       return res.json(jsonData);
@@ -87,8 +90,8 @@ router.post('/api/create', function(req, res){
 
 // /**
 //  * GET '/api/get/:id'
-//  * Receives a GET request specifying the animal to get
-//  * @param  {String} req.param('id'). The animalId
+//  * Receives a GET request specifying the employee to get
+//  * @param  {String} req.param('id'). The employeeId
 //  * @return {Object} JSON
 //  */
 
@@ -97,18 +100,18 @@ router.get('/api/get/:id', function(req, res){
   var requestedId = req.param('id');
 
   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Animal.findById(requestedId, function(err,data){
+  Employee.findById(requestedId, function(err,data){
 
     // if err or no user found, respond with error 
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal'};
+      var error = {status:'ERROR', message: 'Could not find that employee'};
        return res.json(error);
     }
 
-    // otherwise respond with JSON data of the animal
+    // otherwise respond with JSON data of the employee
     var jsonData = {
       status: 'OK',
-      animal: data
+      employee: data
     }
 
     return res.json(jsonData);
@@ -118,17 +121,17 @@ router.get('/api/get/:id', function(req, res){
 
 // /**
 //  * GET '/api/get'
-//  * Receives a GET request to get all animal details
+//  * Receives a GET request to get all employee details
 //  * @return {Object} JSON
 //  */
 
 router.get('/api/get', function(req, res){
 
   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  Animal.find(function(err, data){
-    // if err or no animals found, respond with error 
+  Employee.find(function(err, data){
+    // if err or no employees found, respond with error 
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find animals'};
+      var error = {status:'ERROR', message: 'Could not find employees'};
       return res.json(error);
     }
 
@@ -136,7 +139,7 @@ router.get('/api/get', function(req, res){
 
     var jsonData = {
       status: 'OK',
-      animals: data
+      employees: data
     } 
 
     res.json(jsonData);
@@ -147,9 +150,9 @@ router.get('/api/get', function(req, res){
 
 // /**
 //  * POST '/api/update/:id'
-//  * Receives a POST request with data of the animal to update, updates db, responds back
-//  * @param  {String} req.param('id'). The animalId to update
-//  * @param  {Object} req. An object containing the different attributes of the Animal
+//  * Receives a POST request with data of the employee to update, updates db, responds back
+//  * @param  {String} req.param('id'). The employeeId to update
+//  * @param  {Object} req. An object containing the different attributes of the Employee
 //  * @return {Object} JSON
 //  */
 
@@ -160,64 +163,71 @@ router.post('/api/update/:id', function(req, res){
    var dataToUpdate = {}; // a blank object of data to update
 
     // pull out the information from the req.body and add it to the object to update
-    var name, age, weight, color, url; 
+    var employeeNumber,firstName, lastName, birthDate, email, phone;
+   
 
     // we only want to update any field if it actually is contained within the req.body
     // otherwise, leave it alone.
-    if(req.body.name) {
-      name = req.body.name;
+    if(req.body.employeeNumber) {
+      employeeNumber = req.body.employeeNumber;
       // add to object that holds updated data
-      dataToUpdate['name'] = name;
+      dataToUpdate['employeeNumber'] = employeeNumber;
     }
-    if(req.body.age) {
-      age = req.body.age;
+    if(req.body.firstName) {
+      firstName = req.body.firstName;
       // add to object that holds updated data
-      dataToUpdate['age'] = age;
+      dataToUpdate['firstName'] = firstName;
     }
-    if(req.body.weight) {
-      weight = req.body.weight;
+    if(req.body.lastName) {
+      lastName = req.body.lastName;
       // add to object that holds updated data
-      dataToUpdate['description'] = {};
-      dataToUpdate['description']['weight'] = weight;
+      dataToUpdate['lastName'] = lastName;
+      
     }
-    if(req.body.color) {
-      color = req.body.color;
+    if(req.body.birthDate) {
+      birthDate = req.body.birthDate;
       // add to object that holds updated data
-      if(!dataToUpdate['description']) dataToUpdate['description'] = {};
-      dataToUpdate['description']['color'] = color;
+      dataToUpdate['birthDate'] = birthDate;
     }
-    if(req.body.url) {
-      url = req.body.url;
+    
+    if(req.body.email) {
+        email = req.body.email;
       // add to object that holds updated data
-      dataToUpdate['url'] = url;
+      dataToUpdate['email'] = email;
     }
 
-    var tags = []; // blank array to hold tags
-    if(req.body.tags){
-      tags = req.body.tags.split(","); // split string into array
+    if(req.body.phone) {
+        phone = req.body.phone;
       // add to object that holds updated data
-      dataToUpdate['tags'] = tags;
+      dataToUpdate['phone'] = phone;
+    }
+    
+    var internalRoles = []; // blank array to hold tags
+    if(req.body.internalRoles){
+      internalRoles = req.body.internalRoles.split(","); // split string into array
+      // add to object that holds updated data
+      dataToUpdate['internalRoles'] = internalRoles;
     }
 
 
     console.log('the data to update is ' + JSON.stringify(dataToUpdate));
 
-    // now, update that animal
+    // now, update that employee
     // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-    Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
+    Employee.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
       // if err saving, respond back with error
       if (err){
-        var error = {status:'ERROR', message: 'Error updating animal'};
+        var error = {status:'ERROR', message: 'Error updating employee'};
         return res.json(error);
       }
 
-      console.log('updated the animal!');
+      console.log('updated the employee!');
       console.log(data);
 
       // now return the json data of the new person
       var jsonData = {
         status: 'OK',
-        animal: data
+        employee: data
       }
 
       return res.json(jsonData);
@@ -228,8 +238,8 @@ router.post('/api/update/:id', function(req, res){
 
 /**
  * GET '/api/delete/:id'
- * Receives a GET request specifying the animal to delete
- * @param  {String} req.param('id'). The animalId
+ * Receives a GET request specifying the employee to delete
+ * @param  {String} req.param('id'). The employeeId
  * @return {Object} JSON
  */
 
@@ -238,9 +248,9 @@ router.get('/api/delete/:id', function(req, res){
   var requestedId = req.param('id');
 
   // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
-  Animal.findByIdAndRemove(requestedId,function(err, data){
+  Employee.findByIdAndRemove(requestedId,function(err, data){
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal to delete'};
+      var error = {status:'ERROR', message: 'Could not find that employee to delete'};
       return res.json(error);
     }
 
