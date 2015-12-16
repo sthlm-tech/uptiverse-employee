@@ -12,18 +12,26 @@
   <div class="row">
     <div class="col-lg-12">
       <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in main.awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}<button type="button" class="close" ng-click="main.deleteThing(thing)">&times;</button></a></li>
+      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="employee in main.awesomeEmployees">
+        <li><a href="#" tooltip="{{employee.info}}">{{employee.firstName}} {{employee.lastName}}<button type="button" class="close" ng-click="main.deleteEmployee(employee)">&times;</button></a></li>
       </ul>
     </div>
   </div>
 
-  <form class="thing-form">
+  <form class="employee-form">
     <label>Syncs in realtime across clients</label>
     <p class="input-group">
-      <input type="text" class="form-control" placeholder="Add a new thing here." ng-model="main.newThing">
+        <input type="number" class="form-control" placeholder="Emplyee Number" ng-model="main.newEmployeeNumber">
+        <input type="text" class="form-control" placeholder="First Name" ng-model="main.newEmployeeFirstName">
+        <input type="text" class="form-control" placeholder="Birth Date" ng-model="main.newEmployeeLastName">
+        <input type="date" class="form-control" placeholder="Add a new employee here." ng-model="main.newEmployeeBirthDate">
+        <input type="text" class="form-control" placeholder="Email" ng-model="main.newEmployeeEmail">
+        <input type="text" class="form-control" placeholder="Phone" ng-model="main.newEmployeePhone">
+
+    </p>
+    <p>
       <span class="input-group-btn">
-        <button type="submit" class="btn btn-primary" ng-click="main.addThing()">Add New</button>
+        <button type="submit" class="btn btn-primary" ng-click="main.addEmployee()">Add New</button>
       </span>
     </p>
   </form>
