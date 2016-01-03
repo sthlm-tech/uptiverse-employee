@@ -30,3 +30,19 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+## Deploying
+
+### Firsttime
+1. npm install generator-angular-fullstack
+2. grunt build:dist
+3. cd dist
+4. yo angular-fullstack:heroku
+	- set name on heroku instance
+	- select to deploy to EU
+5. heroku addons:create mongolab
+6. heroku open
+
+### The rest
+1. grunt build
+2. grunt buildcontrol:heroku
