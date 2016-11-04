@@ -1,8 +1,0 @@
-##############################
-#
-# Employee Micro Service TODO
-#
-##############################
-
-TODO: ANFR/20151214 - Alter the "client secret" in index.js to be an env variable instead and keep it out of git
-
