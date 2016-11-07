@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var config = require("./../config");
-var passport = require('passport');
+var passport = require("./passport");
 var Eureka = require('eureka-client').Eureka;
 
 var App = {
@@ -11,6 +11,9 @@ var App = {
 		App.Express = express();
 		App.Express.use(bodyParser());
 
+		App.Express.use(passport.initialize());
+
+		App.Express.use(passport.authenticate('jwt', { session: false}));
 		require("./../routes")();
 
 		App.Server = App.Express.listen(process.env.PORT || config.port, function() {
