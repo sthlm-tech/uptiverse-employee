@@ -34,7 +34,7 @@ module.exports = {
 		    },
 		  },
 		  eureka: {
-		    serviceUrl: [ 'https://user:incorrect2016@uptiverse-discovery.herokuapp.com/eureka/apps/' ],
+		    serviceUrl: [ 'https://user:password@uptiverse-discovery.herokuapp.com/eureka/apps/' ],
 		  },
 		}
 };
