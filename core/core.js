@@ -29,10 +29,10 @@ var App = {
 		App.Server = App.Express.listen(process.env.PORT || config.port, function() {
 		    console.log("Listening on port %d", App.Server.address().port);
 		});
-
+/*
 		App.Eureka = new Eureka(config.eureka);
 
-    App.Eureka.start();
+    App.Eureka.start();*/
 	}
 };
 
