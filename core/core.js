@@ -9,7 +9,8 @@ var App = {
 	Server: {},
 	init: function() {
 		App.Express = express();
-		App.Express.use(bodyParser());
+		App.Express.use(bodyParser.urlencoded());
+		App.Express.use(bodyParser.json());
 
 		App.Express.use(passport.initialize());
 
