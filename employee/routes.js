@@ -11,6 +11,13 @@ module.exports = function() {
 			});
 	});
 
+	App.Express.get( baseUrl + "/me", function (req, res) {
+			employees.getByEmail(req.user.email)
+			.then(function(response) {
+				res.send(response);
+			});
+	});
+
 	App.Express.get( baseUrl + "/:id", function (req, res) {
 			employees.getById(req.params.id)
 			.then(function(response) {

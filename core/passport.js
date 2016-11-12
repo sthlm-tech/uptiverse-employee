@@ -7,10 +7,14 @@ var opts = {
   secretOrKey: process.env.JWT_SECRET || 'React Starter Kit',
 };
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    var id = jwt_payload.id;
 
-    if (id) {
-        done(null, id);
+    var user = {
+      id: jwt_payload.email,
+      email: jwt_payload.email
+    };
+    
+    if (user.email) {
+        done(null, user);
     } else {
         done(null, false);
     }

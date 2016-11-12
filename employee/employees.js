@@ -33,6 +33,16 @@ function EmployeeService() {
 		return deferred.promise;
 	};
 
+	self.getByEmail = function(email){
+		var deferred = when.defer();
+
+		Employee.findOne({"email" : email}, function(err,employee){
+			deferred.resolve(employee);
+		});
+
+		return deferred.promise;
+	};
+
 	self.create = function(in_data){
 		var deferred = when.defer();
 		var employee = new Employee();
