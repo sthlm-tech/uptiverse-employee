@@ -3,12 +3,15 @@ var bodyParser = require("body-parser");
 var config = require("./../config");
 var passport = require("./passport");
 var Eureka = require('eureka-client').Eureka;
+var cors = require('cors');
 
 var App = {
 	Express: {},
 	Server: {},
 	init: function() {
 		App.Express = express();
+
+		App.Express.use(cors());
 		App.Express.use(bodyParser.urlencoded());
 		App.Express.use(bodyParser.json());
 
