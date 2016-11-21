@@ -61,5 +61,29 @@ function EmployeeService() {
 		return deferred.promise;
 	}
 
+	self.save = function(in_data){
+		var deferred = when.defer();
+
+		Employee.findById(in_data._id, function (err, employee) {
+  		if (err) return handleError(err);
+
+			employee.firstname = in_data.firstname;
+			employee.lastname	 = in_data.lastname;
+			employee.pnr = in_data.pnr;
+			employee.birthday = in_data.birthday;
+			employee.googleid = in_data.googleid;
+			employee.picture = in_data.picture;
+			employee.developmentGoals = in_data.developmentGoals;
+
+		  employee.save(function (err, updatedEmployee) {
+		    if (err) return handleError(err);
+				deferred.resolve(updatedEmployee);
+		  });
+		});
+
+
+		return deferred.promise;
+	}
+
 }
 module.exports = new EmployeeService();

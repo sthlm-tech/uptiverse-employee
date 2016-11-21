@@ -32,4 +32,11 @@ module.exports = function() {
 			});
 	});
 
+	App.Express.post( baseUrl + "/save", function (req, res) {
+			employees.save(req.body)
+			.then(function(response) {
+				res.send(response);
+			});
+	});
+
 };
