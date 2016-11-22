@@ -48,11 +48,12 @@ function EmployeeService() {
 		var employee = new Employee();
 		employee.firstname = in_data.firstname;
 		employee.lastname	 = in_data.lastname;
-		employee.pnr = in_data.pnr;
 		employee.birthday = in_data.birthday;
 		employee.googleid = in_data.googleid;
 		employee.picture = in_data.picture;
 		employee.developmentGoals = in_data.developmentGoals;
+		employee.description = in_data.description;
+		employee.email = in_data.email;
 
 		employee.save(function(err, createdEmployee){
 			deferred.resolve(createdEmployee);
@@ -69,11 +70,12 @@ function EmployeeService() {
 
 			employee.firstname = in_data.firstname;
 			employee.lastname	 = in_data.lastname;
-			employee.pnr = in_data.pnr;
 			employee.birthday = in_data.birthday;
 			employee.googleid = in_data.googleid;
 			employee.picture = in_data.picture;
 			employee.developmentGoals = in_data.developmentGoals;
+			employee.description = in_data.description;
+			employee.email = in_data.email;
 
 		  employee.save(function (err, updatedEmployee) {
 		    if (err) return handleError(err);
