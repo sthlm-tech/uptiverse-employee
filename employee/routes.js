@@ -18,8 +18,8 @@ module.exports = function() {
 			});
 	});
 
-	App.Express.get( baseUrl + "/:id", function (req, res) {
-			employees.getById(req.params.id)
+	App.Express.get( baseUrl + "/:username", function (req, res) {
+			employees.getByUsername(req.params.username)
 			.then(function(response) {
 				res.send(response);
 			});

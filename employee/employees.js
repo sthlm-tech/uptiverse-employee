@@ -33,6 +33,16 @@ function EmployeeService() {
 		return deferred.promise;
 	};
 
+	self.getByUsername = function(id){
+		var deferred = when.defer();
+
+		Employee.findOne({"username" : id}, function(err,employee){
+			deferred.resolve(employee);
+		});
+
+		return deferred.promise;
+	};
+
 	self.getByEmail = function(email){
 		var deferred = when.defer();
 
@@ -48,6 +58,7 @@ function EmployeeService() {
 		var employee = new Employee();
 		employee.firstname = in_data.firstname;
 		employee.lastname	 = in_data.lastname;
+		employee.username = in_data.username;
 		employee.birthday = in_data.birthday;
 		employee.googleid = in_data.googleid;
 		employee.picture = in_data.picture;

@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var employeeSchema = mongoose.Schema({
     firstname: String,
     lastname: String,
+    username: String,
     birthday: { type: Date },
     googleid: String,
     picture: String,
