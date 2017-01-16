@@ -1,4 +1,4 @@
-var App = require("./../core/core");
+var App = require("ms-core");
 var employees = require("./employees")	;
 
 var baseUrl = "/employees"

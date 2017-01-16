@@ -1,2 +1,4 @@
-var App = require("./core/core");
-App.init();
+var App = require("ms-core");
+var config = require("./config.js");
+App.init(config);
+require("./employee/routes")();
