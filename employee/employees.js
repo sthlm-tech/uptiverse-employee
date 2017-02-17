@@ -8,7 +8,8 @@ function EmployeeService() {
 
 		Employee.find(function(err, employees) {
 			deferred.resolve(employees);
-	  });
+	  })
+		.sort( { lastname: 1 } );
 
 		return deferred.promise;
 	};
