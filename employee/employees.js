@@ -54,6 +54,7 @@ function EmployeeService() {
 		employee.googleid = in_data.googleid;
 		employee.picture = in_data.picture;
 		employee.developmentGoals = in_data.developmentGoals;
+		employee.developmentGoalsLink = in_data.developmentGoalsLink;
 		employee.description = in_data.description;
 		employee.email = in_data.email;
 
@@ -76,6 +77,7 @@ function EmployeeService() {
 			employee.googleid = in_data.googleid;
 			employee.picture = in_data.picture;
 			employee.developmentGoals = in_data.developmentGoals;
+			employee.developmentGoalsLink = in_data.developmentGoalsLink;
 			employee.description = in_data.description;
 			employee.email = in_data.email;
 
