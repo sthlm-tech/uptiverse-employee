@@ -47,16 +47,12 @@ function EmployeeService() {
 	self.create = function(in_data){
 		var deferred = when.defer();
 		var employee = new Employee();
-		employee.firstname = in_data.firstname;
-		employee.lastname	 = in_data.lastname;
-		employee.username = in_data.username;
-		employee.birthday = in_data.birthday;
-		employee.googleid = in_data.googleid;
-		employee.picture = in_data.picture;
-		employee.developmentGoals = in_data.developmentGoals;
-		employee.developmentGoalsLink = in_data.developmentGoalsLink;
-		employee.description = in_data.description;
-		employee.email = in_data.email;
+
+		for (var property in in_data) {
+			if (in_data.hasOwnProperty(property)) {
+					employee[property] = in_data[property];
+			}
+		}
 
 		employee.save(function(err, createdEmployee){
 			deferred.resolve(createdEmployee);
@@ -71,15 +67,11 @@ function EmployeeService() {
 		Employee.findById(in_data._id, function (err, employee) {
   		if (err) return handleError(err);
 
-			employee.firstname = in_data.firstname;
-			employee.lastname	 = in_data.lastname;
-			employee.birthday = in_data.birthday;
-			employee.googleid = in_data.googleid;
-			employee.picture = in_data.picture;
-			employee.developmentGoals = in_data.developmentGoals;
-			employee.developmentGoalsLink = in_data.developmentGoalsLink;
-			employee.description = in_data.description;
-			employee.email = in_data.email;
+			for (var property in in_data) {
+		    if (in_data.hasOwnProperty(property)) {
+						employee[property] = in_data[property];
+		    }
+			}
 
 		  employee.save(function (err, updatedEmployee) {
 		    if (err) return handleError(err);

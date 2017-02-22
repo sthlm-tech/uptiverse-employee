@@ -8,6 +8,7 @@ var employeeSchema = mongoose.Schema({
     googleid: String,
     picture: String,
     developmentGoals: String,
+    developmentGoalsLink: String,
     description: String,
     email: String,
 
