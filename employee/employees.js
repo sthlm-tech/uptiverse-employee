@@ -99,8 +99,6 @@ function EmployeeService() {
 		self.getByConnection(connection, id)
 		.then(function(employees){
 				if(employees.length == 0){
-					if(!in_data.connections){ in_data.connections = {} }
-					in_data.connections[connection] = id;
 					self.create(in_data)
 					.then(function(employee){
 						deferred.resolve(employee);
@@ -114,8 +112,6 @@ function EmployeeService() {
 						}
 					}
 					employee.save(function (err, updatedEmployee) {
-						console.log(err);
-						console.log(updatedEmployee);
 						deferred.resolve(updatedEmployee);
 					});
 				}
