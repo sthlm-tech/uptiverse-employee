@@ -11,6 +11,16 @@ var employeeSchema = mongoose.Schema({
     developmentGoalsLink: String,
     description: String,
     email: String,
+    office: String,
+    connections: {
+      linkedIn: { id: String },
+      discord: { id: String },
+      google: { id: String },
+      facebook: { id: String },
+      github: { id: String },
+      phone: { id: String },
+      mail: { id: String }
+    },
 
 });
 

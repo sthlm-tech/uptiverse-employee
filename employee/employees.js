@@ -24,6 +24,19 @@ function EmployeeService() {
 		return deferred.promise;
 	};
 
+	self.getByConnection = function(connection, id){
+		var deferred = when.defer();
+
+		var query = {};
+		var connectionIdentifier = "connections." + connection + ".id";
+		query[connectionIdentifier] = id;
+		Employee.find(query, function(err,employee){
+			deferred.resolve(employee);
+		});
+
+		return deferred.promise;
+	};
+
 	self.getByUsername = function(id){
 		var deferred = when.defer();
 
@@ -65,8 +78,6 @@ function EmployeeService() {
 		var deferred = when.defer();
 
 		Employee.findById(in_data._id, function (err, employee) {
-  		if (err) return handleError(err);
-
 			for (var property in in_data) {
 		    if (in_data.hasOwnProperty(property)) {
 						employee[property] = in_data[property];
@@ -74,11 +85,41 @@ function EmployeeService() {
 			}
 
 		  employee.save(function (err, updatedEmployee) {
-		    if (err) return handleError(err);
 				deferred.resolve(updatedEmployee);
 		  });
 		});
 
+
+		return deferred.promise;
+	}
+
+	self.sync = function(id, connection, in_data){
+		var deferred = when.defer();
+
+		self.getByConnection(connection, id)
+		.then(function(employees){
+				if(employees.length == 0){
+					if(!in_data.connections){ in_data.connections = {} }
+					in_data.connections[connection] = id;
+					self.create(in_data)
+					.then(function(employee){
+						deferred.resolve(employee);
+					});
+				}
+				else{
+					var employee = employees[0];
+					for(var property in in_data) {
+						if (in_data.hasOwnProperty(property)) {
+								employee[property] = in_data[property];
+						}
+					}
+					employee.save(function (err, updatedEmployee) {
+						console.log(err);
+						console.log(updatedEmployee);
+						deferred.resolve(updatedEmployee);
+					});
+				}
+		});
 
 		return deferred.promise;
 	}
