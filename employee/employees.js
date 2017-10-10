@@ -76,19 +76,16 @@ function EmployeeService() {
 
 	self.save = function(in_data){
 		var deferred = when.defer();
-
 		Employee.findById(in_data._id, function (err, employee) {
 			for (var property in in_data) {
 		    if (in_data.hasOwnProperty(property)) {
 						employee[property] = in_data[property];
 		    }
 			}
-
 		  employee.save(function (err, updatedEmployee) {
 				deferred.resolve(updatedEmployee);
 		  });
 		});
-
 
 		return deferred.promise;
 	}
