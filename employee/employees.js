@@ -90,7 +90,7 @@ function EmployeeService() {
 					"message":"EMPLOYEE_UPDATED",
 					"scope":"DATA_CHANGED",
 					"data":{
-						"text": updatedEmployee.firstname + " " + updatedEmployee.lastname +"s profile was updated." 
+						"text": updatedEmployee.firstname + " " + updatedEmployee.lastname +"s profile was updated."
 					}
 				});
 		  });
