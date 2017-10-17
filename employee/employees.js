@@ -1,3 +1,4 @@
+var App = require("ms-core");
 var Employee = require("./Employee");
 var when = require('when');
 function EmployeeService() {
@@ -19,6 +20,7 @@ function EmployeeService() {
 
 		Employee.findOne({"_id" : id}, function(err,employee){
 			deferred.resolve(employee);
+			App.Communicator.sendMessage();
 		});
 
 		return deferred.promise;
@@ -84,6 +86,13 @@ function EmployeeService() {
 			}
 		  employee.save(function (err, updatedEmployee) {
 				deferred.resolve(updatedEmployee);
+				App.Communicator.sendMessage({
+					"message":"EMPLOYEE_UPDATED",
+					"scope":"DATA_CHANGED",
+					"data":{
+						"text": updatedEmployee.firstname + " " + updatedEmployee.lastname +"s profile was updated." 
+					}
+				});
 		  });
 		});
 
