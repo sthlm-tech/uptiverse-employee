@@ -86,13 +86,13 @@ function EmployeeService() {
 			}
 		  employee.save(function (err, updatedEmployee) {
 				deferred.resolve(updatedEmployee);
-				App.Communicator.sendMessage({
-					"message":"EMPLOYEE_UPDATED",
-					"scope":"DATA_CHANGED",
-					"data":{
-						"text": updatedEmployee.firstname + " " + updatedEmployee.lastname +"s profile was updated."
-					}
-				});
+				
+				App.Communicator.sendMessage(
+					"EMPLOYEE_UPDATED",
+					"DATA_CHANGED",
+					{ "text": updatedEmployee.firstname + " " + updatedEmployee.lastname +"s profile was updated." }
+				);
+
 		  });
 		});
 
