@@ -46,4 +46,11 @@ module.exports = function() {
 			});
 	});
 
+	App.Express.post( baseUrl + "/sync", function (req, res) {
+			employees.sync(req.body.id, req.body.connection, req.body.employee)
+			.then(function(response) {
+				res.send(response);
+			});
+	});
+
 };
