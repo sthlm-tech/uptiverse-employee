@@ -79,7 +79,7 @@ function EmployeeService() {
 	self.save = function(in_data){
 		var deferred = when.defer();
 		Employee.findById(in_data._id, function (err, employee) {
-			employee = merge(employees[0],in_data);
+			employee = merge(employee,in_data);
 		  employee.save(function (err, updatedEmployee) {
 				deferred.resolve(updatedEmployee);
 
