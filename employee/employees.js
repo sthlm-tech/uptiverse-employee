@@ -79,14 +79,10 @@ function EmployeeService() {
 	self.save = function(in_data){
 		var deferred = when.defer();
 		Employee.findById(in_data._id, function (err, employee) {
-			for (var property in in_data) {
-		    if (in_data.hasOwnProperty(property)) {
-						employee[property] = in_data[property];
-		    }
-			}
+			employee = merge(employees[0],in_data);
 		  employee.save(function (err, updatedEmployee) {
 				deferred.resolve(updatedEmployee);
-				
+
 				App.Communicator.sendMessage(
 					"EMPLOYEE_UPDATED",
 					"DATA_CHANGED",
@@ -111,12 +107,7 @@ function EmployeeService() {
 					});
 				}
 				else{
-					var employee = employees[0];
-					for(var property in in_data) {
-						if (in_data.hasOwnProperty(property)) {
-								employee[property] = in_data[property];
-						}
-					}
+					var employee = merge(employees[0],in_data);
 					employee.save(function (err, updatedEmployee) {
 						deferred.resolve(updatedEmployee);
 					});
@@ -127,4 +118,18 @@ function EmployeeService() {
 	}
 
 }
+
+function merge(a,b){
+	for(var property in b){
+  	if (b.hasOwnProperty(property)) {
+    	if(typeof b[property] === 'object'){
+      	a[property] = merge(a[property], b[property]);
+      }else{
+      	a[property] = b[property];
+      }
+    }
+  }
+ return a;
+}
+
 module.exports = new EmployeeService();
