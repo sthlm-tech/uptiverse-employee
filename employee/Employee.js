@@ -15,6 +15,7 @@ var employeeSchema = mongoose.Schema({
     connections: {
       linkedIn: { id: String },
       discord: { id: String },
+      slack: { id: String }
       google: { id: String },
       facebook: { id: String },
       github: { id: String },
